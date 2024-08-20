@@ -22,7 +22,6 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlin.math.log
 
 class calculations : AppCompatActivity() {
-
     private lateinit var fromSplinner: Spinner
     private lateinit var fromInputEditText: TextInputEditText
     private lateinit var toSplinner: Spinner
@@ -31,33 +30,45 @@ class calculations : AppCompatActivity() {
     lateinit var fromUnit: String
     lateinit var toUnit: String
     lateinit var category:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_calculations)
 
         Init()
-
-
     }
+
     fun Init(){
+
         fromSplinner = findViewById(R.id.CalFromSpliner)
         toSplinner = findViewById(R.id.CalToSpliner)
         fromInputEditText = findViewById(R.id.CalEditTextFrom)
         toInputEditText = findViewById(R.id.CalEditTextTo)
         backBtn = findViewById(R.id.calBackBtn)
+
+        // create a object of getData from intent
+
         val intent = intent
+
+        // get and store category array data
+
         val unit:ArrayList<String> = intent.getSerializableExtra("units") as ArrayList<String>
         category = intent.getStringExtra("name").toString()
-        Log.d("Kb", "hello : {$unit}")
-//
+
+        // set data at spinner
         fromSplinner.adapter =ArrayAdapter(applicationContext, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,unit)
         toSplinner.adapter =ArrayAdapter(applicationContext, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,unit)
 
-        Log.d("Kb", "hello : added data to splinner")
+
+        // close activity
+
         backBtn.setOnClickListener(View.OnClickListener {
             this.finish()
         })
+
+
+        // add a from value selector listener
 
       fromSplinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
           override fun onItemSelected(
@@ -79,6 +90,9 @@ class calculations : AppCompatActivity() {
               fromUnit = unit[0].toString()
           }
       }
+
+        // add to value spinner value selection listener
+
         toSplinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -99,9 +113,12 @@ class calculations : AppCompatActivity() {
             }
         }
 
+
+        // Apply Change event of edit text
+
         fromInputEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                toInputEditText.setText("0.0")
+                toInputEditText.setText("0.0")
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -120,15 +137,19 @@ class calculations : AppCompatActivity() {
 
     }
 
+    // function for return calculation outcome
+
     fun getCalulation():Double{
         when (category){
             "Speed"->{
-                Log.d("Data", "From :${fromUnit} ")
-                Log.d("Data", "to :${toUnit} ")
-                Log.d("Data", "Number : ${fromInputEditText.text.toString()} ")
-                Log.d("Data", "Category :${category} ")
                 return Common.Speed().calculation(from = fromUnit,to =  toUnit, number = fromInputEditText.text.toString().toDouble())
 
+            }
+            "Area"->{
+                return Common.Area().calculation(from = fromUnit,to =  toUnit, number = fromInputEditText.text.toString().toDouble())
+            }
+            "Temperature"->{
+                return Common.Temperature().calculation(from = fromUnit,to =  toUnit, number = fromInputEditText.text.toString().toDouble())
             }
 
             else->
