@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ class calculations : AppCompatActivity() {
     private lateinit var toSplinner: Spinner
     private lateinit var toInputEditText: TextInputEditText
     private lateinit var backBtn: ImageView
+    private  lateinit var textHeader: TextView
     lateinit var fromUnit: String
     lateinit var toUnit: String
     lateinit var category:String
@@ -46,6 +48,7 @@ class calculations : AppCompatActivity() {
         fromInputEditText = findViewById(R.id.CalEditTextFrom)
         toInputEditText = findViewById(R.id.CalEditTextTo)
         backBtn = findViewById(R.id.calBackBtn)
+        textHeader = findViewById(R.id.CatHeaderTitle)
 
         // create a object of getData from intent
 
@@ -55,10 +58,11 @@ class calculations : AppCompatActivity() {
 
         val unit:ArrayList<String> = intent.getSerializableExtra("units") as ArrayList<String>
         category = intent.getStringExtra("name").toString()
+        textHeader.setText(category)
 
         // set data at spinner
-        fromSplinner.adapter =ArrayAdapter(applicationContext, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,unit)
-        toSplinner.adapter =ArrayAdapter(applicationContext, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,unit)
+        fromSplinner.adapter =ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item,unit)
+        toSplinner.adapter =ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item,unit)
 
 
         // close activity
@@ -79,9 +83,7 @@ class calculations : AppCompatActivity() {
           ) {
               fromUnit = unit[position].toString()
               if(fromInputEditText.text.toString()!=""){
-                  Log.d("Data:", "$ from unit : {fromUnit}")
                   toInputEditText.setText(getCalulation().toString())
-                  Log.d("Data", "Input number ${fromInputEditText.text} ")
 //                  Log.d("Data", "${toInputEditText}")
               }
           }
@@ -115,10 +117,9 @@ class calculations : AppCompatActivity() {
 
 
         // Apply Change event of edit text
-
         fromInputEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                toInputEditText.setText("0.0")
+                toInputEditText.setText("0")
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
