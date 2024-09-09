@@ -238,4 +238,86 @@ class Common {
             }
         }
     }
+
+    class Mass {
+        private var units: ArrayList<String> = ArrayList()
+
+        init {
+            units = arrayListOf(
+                "Tonne",
+                "Kilogram",
+                "Gram",
+                "Milligram",
+                "Microgram",
+                "Pound",
+            )
+        }
+
+        fun getUnits(): ArrayList<String> {
+            return this.units
+        }
+
+        fun calculate(from: String? = null, to: String? = null, number: Double = 0.0): Double {
+            if (from.equals(to)) {
+                return number
+            }
+            when (from) {
+                "Tonne" -> return when (to) {
+                    "Kilogram" -> number * 1000
+                    "Gram" -> number * 1e+6
+                    "Milligram" -> number * 1e+9
+                    "Microgram" -> number * 1e+12
+                    "Pound" -> number * 2205
+                    else -> 0.0
+                }
+
+                "Kilogram" -> return when (to) {
+                    "Tonne" -> number / 1000
+                    "Gram" -> number * 1000
+                    "Milligram" -> number * 1e+6
+                    "Microgram" -> number * 1e+9
+                    "Pound" -> number * 2.205
+                    else -> 0.0
+                }
+
+                "Gram" -> return when (to) {
+                    "Tonne" -> number / 1e+6
+                    "Kilogram" -> number / 1000
+                    "Milligram" -> number * 1000
+                    "Microgram" -> number * 1e+6
+                    "Pound" -> number / 453.6
+                    else -> 0.0
+                }
+
+                "Milligram" -> return when (to) {
+                    "Tonne" -> number / 1e+9
+                    "Kilogram" -> number / 1e+6
+                    "Gram" -> number / 1000
+                    "Microgram" -> number * 1000
+                    "Pound" -> number / 453600
+                    else -> 0.0
+                }
+
+                "Microgram" -> return when (to) {
+                    "Tonne" -> number / 1e+12
+                    "Kilogram" -> number / 1e+9
+                    "Gram" -> number / 1e+6
+                    "Milligram" -> number / 1000
+                    "Pound" -> number / 4.536e+8
+                    else -> 0.0
+                }
+
+                "Pound" -> return when (to) {
+                    "Tonne" -> number / 2205
+                    "Kilogram" -> number / 2.205
+                    "Gram" -> number * 453.6
+                    "Milligram" -> number * 453600
+                    "Microgram" -> number * 4.536e+8
+                    else -> 0.0
+                }
+
+                else -> return 0.0
+            }
+        }
+    }
 }

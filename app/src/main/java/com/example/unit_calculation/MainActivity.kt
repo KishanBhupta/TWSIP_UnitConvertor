@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         commonList = arrayListOf(
             Category(name = "Speed", unit = Common.Speed().getUnit(), image = R.drawable.baseline_speed_24),
             Category(name = "Area", unit = Common.Area().getUnit(), image = R.drawable.baseline_area_chart_24),
-            Category(name = "Temperature", unit = Common.Temperature().getUnit(), image = R.drawable.baseline_device_thermostat_24)
+            Category(name = "Temperature", unit = Common.Temperature().getUnit(), image = R.drawable.baseline_device_thermostat_24),
+            Category(name = "Mass", unit = Common.Mass().getUnits(), image = R.drawable.mass_24)
         )
 
         commonAdaptor = CategoryAdaptor(arrayList = commonList, context = applicationContext)

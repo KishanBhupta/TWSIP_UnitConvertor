@@ -61,8 +61,8 @@ class calculations : AppCompatActivity() {
         textHeader.setText(category)
 
         // set data at spinner
-        fromSplinner.adapter =ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item,unit)
-        toSplinner.adapter =ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item,unit)
+        fromSplinner.adapter =ArrayAdapter(applicationContext, android.R.layout.simple_dropdown_item_1line,unit)
+        toSplinner.adapter =ArrayAdapter(applicationContext, android.R.layout.simple_dropdown_item_1line,unit)
 
 
         // close activity
@@ -151,6 +151,9 @@ class calculations : AppCompatActivity() {
             }
             "Temperature"->{
                 return Common.Temperature().calculation(from = fromUnit,to =  toUnit, number = fromInputEditText.text.toString().toDouble())
+            }
+            "Mass"->{
+                return Common.Mass().calculate(from = fromUnit,to =  toUnit, number = fromInputEditText.text.toString().toDouble())
             }
 
             else->
